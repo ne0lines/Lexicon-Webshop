@@ -21,7 +21,7 @@ export default function SidebarMenuItem({ item }: Readonly<{ item: MenuItem }>) 
 
     return (
         <li>
-            <Link className={`flex items-center gap-2 px-6 py-2 rounded-lg font-medium cursor-pointer ${linkTextClass} ${linkBgClass}`} href={item.href}>
+            <Link className={`flex items-center gap-2 px-6 py-2 rounded-lg font-medium ${linkTextClass} ${linkBgClass}`} href={item.href}>
                 <Icon size={18} />
                 {item.label}
             </Link>
