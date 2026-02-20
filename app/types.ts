@@ -53,3 +53,11 @@ export interface ProductsResponse {
   page: number;
   pages: number;
 }
+
+import { LucideIcon } from 'lucide-react';
+export interface MenuItem {
+  href: string;
+  label: string;
+  icon: LucideIcon;
+  color: 'purple' | 'blue' | 'green' | 'yellow' | 'red';
+}
