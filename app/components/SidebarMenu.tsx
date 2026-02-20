@@ -40,11 +40,9 @@ const menuItems = [
 export default function SidebarMenu() {
     return (
         <ul className="gap-2 px-4 flex flex-col">
-            {menuItems.map((item) => {
-                return (
-                    <SidebarMenuItem key={item.href} item={item} />
-                );
-            })}
+            {menuItems.map((item) => (
+                <SidebarMenuItem key={item.href} item={item} />
+            ))}
         </ul>
     );
 }
