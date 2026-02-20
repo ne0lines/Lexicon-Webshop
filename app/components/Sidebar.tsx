@@ -1,6 +1,6 @@
-import SidebarMenu from './SidebarMenu'
-import SidebarLogotype from './SidebarLogotype'
-import SidebarUserDisplayWidget from './SidebarUserDisplayWidget'
+import SidebarMenu from './SidebarMenu';
+import SidebarLogotype from './SidebarLogotype';
+import SidebarUserDisplayWidget from './SidebarUserDisplayWidget';
 
 export default function Sidebar() {
     return(
