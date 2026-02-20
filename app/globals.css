@@ -1,1 +1,72 @@
 @import "tailwindcss";
+/* =========================
+   Modern CSS Reset
+   ========================= */
+/* 1. Box sizing */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; 
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Core body defaults */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 4. Media elements behave */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 5. Remove built-in form typography */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 6. Remove default button styling */ 
+button {
+  cursor: pointer;
+}
+
+/* 7. Remove list styles */
+ul,
+ol {
+  list-style: none;
+}
+
+/* 8. Anchor reset */
+a {
+  text-decoration: none;
+}
+
+/* 9. Headings don’t override font size */
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+}
+
+/* 10. Prevent textarea resize from breaking layouts */
+textarea {
+  resize: vertical;
+}

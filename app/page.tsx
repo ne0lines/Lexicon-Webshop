@@ -1,8 +1,18 @@
 import type { ProductsResponse } from "./types";
-import { Plus, Barcode, ChartLine, ShoppingCart, Users, Settings, Package2, CircleCheck, TriangleAlert, CircleX } from 'lucide-react';
+import { Plus, Barcode, ChartLine, ShoppingCart, Users, Settings, Package2, CircleCheck, TriangleAlert, CircleX, Funnel, SquarePen, Trash2 } from 'lucide-react';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 const API_URL = "http://localhost:4000";
-const defaultLimit = "6";
+const defaultLimit = "20";
+
+function formatPrice(value) {
+  return Math.trunc(Number(value)).toLocaleString("sv-SE")
+}
 
 export default async function Home() {
   // we use the fetch() method to get the products from the API
@@ -17,85 +27,154 @@ export default async function Home() {
 console.log(products);
 
   return (
-    <>
-      <aside className="h-full fixed p-6">
-        <div className="flex flex-col">
-          <span className="font-bold text-xl">Webbutiken</span>
-          <span className="font-normal text-xs clear-left">Admin panel</span>
-        </div>
-        <nav className="p-6">
-          <ul className="flex flex-col">
-            <li className="flex h-8 gap-4"><Barcode/>Products</li>
-            <li className="flex h-8 gap-4"><ChartLine/>Analytics</li>
-            <li className="flex h-8 gap-4"><ShoppingCart/>Orders</li>
-            <li className="flex h-8 gap-4"><Users/>Customers</li>
-            <li className="flex h-8 gap-4"><Settings/>Settings</li>
-          </ul>
-        </nav>
-        <section id="user-info">
-          <span>avatar</span>
-          <strong>username</strong>
-          <span>user e-mail</span>
+    <div className={inter.className}>
+      <aside className="min-h-screen w-64 flex flex-col bg-white justify-between h-screen fixed left-0 top-0 z-40">
+        <div>
+          <div className="px-6 py-4 text-xl font-bold">
+            Webbutiken<br />
+            <span className="font-normal text-xs">Admin panel</span>
+          </div>
+          <nav className="mt-4">
+            <ul className="gap-2 px-4 flex flex-col">
+              <li><a className="flex gap-2 px-6 py-2 item-center gap-2 rounded-lg font-medium cursor-pointer bg-purple-600 text-white" href="/"><Barcode/>Products</a></li>
+              <li><a className="flex gap-2 px-6 py-2 item-center gap-2 rounded-lg font-medium cursor-pointer text-blue-500 hover:bg-blue-100 hover:text-blue-600" href="/"><ChartLine/>Analytics</a></li>
+              <li><a className="flex gap-2 px-6 py-2 item-center gap-2 rounded-lg font-medium cursor-pointer text-green-500 hover:bg-green-100 hover:text-green-600" href="/"><ShoppingCart/>Orders</a></li>
+              <li><a className="flex gap-2 px-6 py-2 item-center gap-2 rounded-lg font-medium cursor-pointer text-yellow-500 hover:bg-yellow-100 hover:text-yellow-600" href="/"><Users/>Customers</a></li>
+              <li><a className="flex gap-2 px-6 py-2 item-center gap-2 rounded-lg font-medium cursor-pointer text-red-500 hover:bg-red-100 hover:text-red-600" href="/"><Settings/>Settings</a></li>
+            </ul>
+          </nav>
+        </div> 
+        <section className="px-6 py-4 flex items-center gap-2">
+          <img src="http://placehold.co/40x40" alt="Admin user" className="rounded-full"/>
+          <div>
+            <div className="font-medium text-sm">Admin user</div>
+            <div className="text-xs text-gray-500">admin@webbutiken.se</div>
+          </div>
         </section>
       </aside>
-      <header className="w-full fixed pl-70">
-        <h1>Product management</h1>
-        <span>Manage your store inventory</span>
-        <button><Plus/> Add product</button>
-        <div>
-          <span>Total products</span><Package2 />
-          <span>248</span>
-          </div> 
-        <div>
-          <span>In stock</span><CircleCheck />
-          <span>189</span>
+      <header className="fixed left-64 top-0 right-0 z-30">
+        <section className="px-8 py-4 bg-white flex items-center justify-between">
+          <div >
+            <h1 className="text-1xl font-bold">Product management</h1>
+            <span className="text-gray-500 text-sm">Manage your store inventory</span>
           </div>
-        <div>
-          <span>Low stock</span><TriangleAlert />
-          <span>34</span>
-          </div>
-        <div>
-          <span>Out of stock</span><CircleX />
-          <span>25</span>
-          </div>
-      </header>
-      <main className="w-full pl-70 pt-80">
-        <section>
-          <label htmlFor="search-input">Sök bland produkter</label>
-          <input name="search-input" id="search-input" />
-          <label htmlFor="category" >Välj kategori</label>
-          <select id="category">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="2">3</option>
-          </select>
-          <label htmlFor="status" >Välj lagerstatus</label>
-          <select id="category">
-            <option value="1">High</option>
-            <option value="2">Medium</option>
-            <option value="2">Low</option>
-          </select>
-          <label htmlFor="filter">Filtrera produkter</label>
-          <button type="button" id="filter">Filter</button>
+          <button className="bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-medium hover:bg-purple-700"><Plus/> Add product</button>
         </section>
-        
-        <h1>Products</h1>
-        <div>{products.map((product) => <h2 key={product.id}>{product.title} - {product.category?.name}</h2>)}</div>
-        <div class="flex">
-          <div >Showing X to Y of Z products</div>
+        <section className="grid grid-cols-4 gap-6 mb-8 mt-24 px-8 py-4 bg-gray-50">
+          <div className="bg-white rounded shadow p-4 flex  items-center justify-between">
+            <div className="flex flex-col items-start">
+              <span className="text-xs text-gray-500 mb-1">Total products</span>
+              <span className="block text-2xl font-bold">248</span>
+            </div>
+            <div className="bg-purple-100 rounded-md p-2 flex items-center justify-center text-purple-500">
+              <Package2 />
+            </div>
+            </div>
+          <div className="bg-white rounded shadow p-4 flex  items-center justify-between">
+            <div className="flex flex-col items-start">
+              <span className="text-xs text-gray-500 mb-1">In stock</span>
+              <span className="block text-2xl font-bold">189</span>
+            </div>
+            <div className="bg-green-100 rounded-md p-2 flex items-center justify-center text-green-500">
+              <CircleCheck />
+            </div>
+            </div>
+          <div className="bg-white rounded shadow p-4 flex  items-center justify-between">
+            <div className="flex flex-col items-start">
+              <span className="text-xs text-gray-500 mb-1">Low stock</span>
+              <span className="block text-2xl font-bold">34</span>
+            </div>
+            <div className="bg-yellow-100 rounded-md p-2 flex items-center justify-center text-yellow-500">
+              <TriangleAlert />
+            </div>
+            </div>
+          <div className="bg-white rounded shadow p-4 flex  items-center justify-between">
+            <div className="flex flex-col items-start">
+              <span className="text-xs text-gray-500 mb-1">Out of stock</span>
+              <span className="block text-2xl font-bold">25</span>
+            </div>
+            <div className="bg-pink-100 rounded-md p-2 flex items-center justify-center text-pink-500">
+              <CircleX />
+            </div>
+            </div>
+        </section>
+        <form className="flex items-center gap-4 mb-6 border-gray-300 px-8 py-4 bg-gray-50">
+          <div className="border-gray-300 border-2 rounded-lg px-4 py-2 flex items-center flex-1">
+            <label htmlFor="search-input" >Sök bland produkter</label>
+            <input name="search-input" id="search-input" />
+          </div>
+          <div className="border-gray-300 border-2 rounded-lg px-4 py-2 flex items-center">
+            <label htmlFor="category" className="hidden">Välj kategori</label>
+            <select id="category">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="2">3</option>
+            </select>
+          </div>
+          <div className="border-gray-300 border-2 rounded-lg px-4 py-2 flex items-center">
+            <label htmlFor="status"className="hidden">Välj lagerstatus</label>
+            <select id="category">
+             <option value="1">High</option>
+              <option value="2">Medium</option>
+             <option value="2">Low</option>
+            </select>
+          </div>
+          <div className="border-gray-300 border-2 rounded-lg px-4 py-2 flex items-center">
+            <label htmlFor="filter" className="hidden">Filtrera produkter</label>
+            <button type="button" id="filter">Filter</button>
+            <Funnel/>
+          </div>
+        </form>
+      </header>
+      <main className="w-full pl-70 pt-70 pb-15 bg-gray-50">            <div className="bg-pink-100 rounded-md p-2 flex items-center justify-center text-pink-500">
+              <CircleX />
+            </div>
+        <div>
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="text-center">
+                <th></th>
+                <th>Product</th>
+                <th>Category</th>
+                <th className="text-right">Price</th>
+                <th className="text-right">Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr key={product.id} className="hover:bg-gray-100">
+                  <td className="px-3 py-2 align-middle"><img src={product.thumbnail} alt={product.title} className="w-10" /></td>
+                  <td className="px-3 py-2 align-middle flex flex-col truncate"><a href={`/${product.id}`} className="font-semibold text-blue-500 hover:text-blue-700">{product.title}</a><span className="text-xs text-gray-400">{product.sku}</span></td>
+                  <td className="px-3 py-2 align-middle text-gray-700 truncate">{product.category?.name}</td>
+                  <td className="px-3 py-2 align-middle text-right nowrap">{formatPrice(product.price)} kr</td>
+                  <td className="px-3 py-2 align-middle text-right">{product.stock}pcs</td>
+                  <td className={`px-3 py-2 align-middle text-center ${product.stock > 10 ? 'text-green-700' : product.stock > 0 ? 'text-yellow-700' : 'text-red-700'}`}>{product.availabilityStatus}</td>
+                  <td className="px-3 py-2 align-middle text-center flex gap-1">
+                    <button className="text-purple-600 bg-purple-200 p-1 rounded-md hover:bg-purple-700 hover:text-white"><SquarePen className="w-4 h-4" /></button>
+                    <button className="text-red-600 bg-red-200 p-1 rounded-md hover:bg-red-700 hover:text-white"><Trash2 className="w-4 h-4" /></button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <footer className="fixed bottom-0 left-64 right-0 z-30 flex items-center justify-between mt-4 gap-2 p-4 bg-white">
+          <div className="flex h-8 text-xs text-gray-600 items-center">Showing X to Y of Z products</div>
           <div>
             <nav>
-              <ul>
-                <li>Previous</li>
-                <li class="active">1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>Next</li>
-              </ul>
+              <div className="flex gap-2 text-xs">
+                <button className="px-2.5 py-1 rounded border border-gray-300 bg-white text-gray-700 hover:bg-purple-200 hover:text-black hover:border-purple-200 text-xs">Previous</button>
+                <button className="px-2.5 py-1 rounded border border-purple-600 transition-colors bg-purple-600 text-white text-xs">1</button>
+                <button className="px-2.5 py-1 rounded border border-gray-300 transition-colors bg-white text-gray-700 border border-gray-200 hover:bg-purple-200 hover:border-purple-200 hover:text-black text-xs">2</button>
+                <button className="px-2.5 py-1 rounded border border-gray-300 transition-colors bg-white text-gray-700 border border-gray-200 hover:bg-purple-200 hover:border-purple-200 hover:text-black text-xs">3</button>
+                <button className="px-2.5 py-1 rounded border border-gray-300 bg-white text-gray-700 hover:bg-purple-200 hover:text-black hover:border-purple-200 text-xs">Next</button>
+              </div>
             </nav>
           </div>
-        </div>
+        </footer>
       </main>
-    </>
+    </div>
   );
 }
