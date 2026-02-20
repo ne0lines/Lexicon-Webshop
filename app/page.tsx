@@ -1,16 +1,10 @@
 import type { ProductsResponse } from "./types";
-import { Plus, Barcode, ChartLine, ShoppingCart, Users, Settings, Package2, CircleCheck, TriangleAlert, CircleX, Funnel, SquarePen, Trash2 } from 'lucide-react';
-import { Inter } from 'next/font/google';
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-})
+import { Plus, Package2, CircleCheck, TriangleAlert, CircleX, Funnel, SquarePen, Trash2 } from 'lucide-react';
 
 const API_URL = "http://localhost:4000";
-const defaultLimit = "20";
+const defaultLimit = 20;
 
-function formatPrice(value) {
+function formatPrice(value: number) {
   return Math.trunc(Number(value)).toLocaleString("sv-SE")
 }
 
@@ -23,35 +17,8 @@ export default async function Home() {
     `${API_URL}/products/?_limit=${defaultLimit}&_sort=id&_order=desc&_expand=category`,
   ).then((res) => res.json());
 
-
-console.log(products);
-
   return (
-    <div className={inter.className}>
-      <aside className="min-h-screen w-64 flex flex-col bg-white justify-between h-screen fixed left-0 top-0 z-40">
-        <div>
-          <div className="px-6 py-4 text-xl font-bold">
-            Webbutiken<br />
-            <span className="font-normal text-xs">Admin panel</span>
-          </div>
-          <nav className="mt-4">
-            <ul className="gap-2 px-4 flex flex-col">
-              <li><a className="flex gap-2 px-6 py-2 item-center gap-2 rounded-lg font-medium cursor-pointer bg-purple-600 text-white" href="/"><Barcode/>Products</a></li>
-              <li><a className="flex gap-2 px-6 py-2 item-center gap-2 rounded-lg font-medium cursor-pointer text-blue-500 hover:bg-blue-100 hover:text-blue-600" href="/"><ChartLine/>Analytics</a></li>
-              <li><a className="flex gap-2 px-6 py-2 item-center gap-2 rounded-lg font-medium cursor-pointer text-green-500 hover:bg-green-100 hover:text-green-600" href="/"><ShoppingCart/>Orders</a></li>
-              <li><a className="flex gap-2 px-6 py-2 item-center gap-2 rounded-lg font-medium cursor-pointer text-yellow-500 hover:bg-yellow-100 hover:text-yellow-600" href="/"><Users/>Customers</a></li>
-              <li><a className="flex gap-2 px-6 py-2 item-center gap-2 rounded-lg font-medium cursor-pointer text-red-500 hover:bg-red-100 hover:text-red-600" href="/"><Settings/>Settings</a></li>
-            </ul>
-          </nav>
-        </div> 
-        <section className="px-6 py-4 flex items-center gap-2">
-          <img src="http://placehold.co/40x40" alt="Admin user" className="rounded-full"/>
-          <div>
-            <div className="font-medium text-sm">Admin user</div>
-            <div className="text-xs text-gray-500">admin@webbutiken.se</div>
-          </div>
-        </section>
-      </aside>
+    <>
       <header className="fixed left-64 top-0 right-0 z-30">
         <section className="px-8 py-4 bg-white flex items-center justify-between">
           <div >
@@ -69,7 +36,7 @@ console.log(products);
             <div className="bg-purple-100 rounded-md p-2 flex items-center justify-center text-purple-500">
               <Package2 />
             </div>
-            </div>
+          </div>
           <div className="bg-white rounded shadow p-4 flex  items-center justify-between">
             <div className="flex flex-col items-start">
               <span className="text-xs text-gray-500 mb-1">In stock</span>
@@ -78,7 +45,7 @@ console.log(products);
             <div className="bg-green-100 rounded-md p-2 flex items-center justify-center text-green-500">
               <CircleCheck />
             </div>
-            </div>
+          </div>
           <div className="bg-white rounded shadow p-4 flex  items-center justify-between">
             <div className="flex flex-col items-start">
               <span className="text-xs text-gray-500 mb-1">Low stock</span>
@@ -87,7 +54,7 @@ console.log(products);
             <div className="bg-yellow-100 rounded-md p-2 flex items-center justify-center text-yellow-500">
               <TriangleAlert />
             </div>
-            </div>
+          </div>
           <div className="bg-white rounded shadow p-4 flex  items-center justify-between">
             <div className="flex flex-col items-start">
               <span className="text-xs text-gray-500 mb-1">Out of stock</span>
@@ -96,7 +63,7 @@ console.log(products);
             <div className="bg-pink-100 rounded-md p-2 flex items-center justify-center text-pink-500">
               <CircleX />
             </div>
-            </div>
+          </div>
         </section>
         <form className="flex items-center gap-4 mb-6 border-gray-300 px-8 py-4 bg-gray-50">
           <div className="border-gray-300 border-2 rounded-lg px-4 py-2 flex items-center flex-1">
@@ -114,9 +81,9 @@ console.log(products);
           <div className="border-gray-300 border-2 rounded-lg px-4 py-2 flex items-center">
             <label htmlFor="status"className="hidden">Välj lagerstatus</label>
             <select id="category">
-             <option value="1">High</option>
+            <option value="1">High</option>
               <option value="2">Medium</option>
-             <option value="2">Low</option>
+            <option value="2">Low</option>
             </select>
           </div>
           <div className="border-gray-300 border-2 rounded-lg px-4 py-2 flex items-center">
@@ -126,55 +93,56 @@ console.log(products);
           </div>
         </form>
       </header>
-      <main className="w-full pl-70 pt-70 pb-15 bg-gray-50">            <div className="bg-pink-100 rounded-md p-2 flex items-center justify-center text-pink-500">
-              <CircleX />
-            </div>
+      <main className="w-full pl-70 pt-70 pb-15 bg-gray-50">
+        <div className="bg-pink-100 rounded-md p-2 flex items-center justify-center text-pink-500">
+          <CircleX />
+        </div>
         <div>
           <table className="w-full text-xs">
             <thead>
-              <tr className="text-center">
-                <th></th>
-                <th>Product</th>
-                <th>Category</th>
-                <th className="text-right">Price</th>
-                <th className="text-right">Stock</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
+            <tr className="text-center">
+              <th></th>
+              <th>Product</th>
+              <th>Category</th>
+              <th className="text-right">Price</th>
+              <th className="text-right">Stock</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
-                <tr key={product.id} className="hover:bg-gray-100">
-                  <td className="px-3 py-2 align-middle"><img src={product.thumbnail} alt={product.title} className="w-10" /></td>
-                  <td className="px-3 py-2 align-middle flex flex-col truncate"><a href={`/${product.id}`} className="font-semibold text-blue-500 hover:text-blue-700">{product.title}</a><span className="text-xs text-gray-400">{product.sku}</span></td>
-                  <td className="px-3 py-2 align-middle text-gray-700 truncate">{product.category?.name}</td>
-                  <td className="px-3 py-2 align-middle text-right nowrap">{formatPrice(product.price)} kr</td>
-                  <td className="px-3 py-2 align-middle text-right">{product.stock}pcs</td>
-                  <td className={`px-3 py-2 align-middle text-center ${product.stock > 10 ? 'text-green-700' : product.stock > 0 ? 'text-yellow-700' : 'text-red-700'}`}>{product.availabilityStatus}</td>
-                  <td className="px-3 py-2 align-middle text-center flex gap-1">
-                    <button className="text-purple-600 bg-purple-200 p-1 rounded-md hover:bg-purple-700 hover:text-white"><SquarePen className="w-4 h-4" /></button>
-                    <button className="text-red-600 bg-red-200 p-1 rounded-md hover:bg-red-700 hover:text-white"><Trash2 className="w-4 h-4" /></button>
-                  </td>
-                </tr>
-              ))}
+            {products.map((product) => (
+              <tr key={product.id} className="hover:bg-gray-100">
+                <td className="px-3 py-2 align-middle"><img src={product.thumbnail} alt={product.title} className="w-10" /></td>
+                <td className="px-3 py-2 align-middle flex flex-col truncate"><a href={`/${product.id}`} className="font-semibold text-blue-500 hover:text-blue-700">{product.title}</a><span className="text-xs text-gray-400">{product.sku}</span></td>
+                <td className="px-3 py-2 align-middle text-gray-700 truncate">{product.category?.name}</td>
+                <td className="px-3 py-2 align-middle text-right nowrap">{formatPrice(product.price)} kr</td>
+                <td className="px-3 py-2 align-middle text-right">{product.stock}pcs</td>
+                <td className={`px-3 py-2 align-middle text-center ${((product.stock ?? 0) > 10) ? 'text-green-700' : (product.stock ?? 0) > 0 ? 'text-yellow-700' : 'text-red-700'}`}>{product.availabilityStatus}</td>
+                <td className="px-3 py-2 align-middle text-center flex gap-1">
+                  <button className="text-purple-600 bg-purple-200 p-1 rounded-md hover:bg-purple-700 hover:text-white"><SquarePen className="w-4 h-4" /></button>
+                  <button className="text-red-600 bg-red-200 p-1 rounded-md hover:bg-red-700 hover:text-white"><Trash2 className="w-4 h-4" /></button>
+                </td>
+              </tr>
+            ))}
             </tbody>
           </table>
         </div>
-        <footer className="fixed bottom-0 left-64 right-0 z-30 flex items-center justify-between mt-4 gap-2 p-4 bg-white">
-          <div className="flex h-8 text-xs text-gray-600 items-center">Showing X to Y of Z products</div>
-          <div>
-            <nav>
-              <div className="flex gap-2 text-xs">
-                <button className="px-2.5 py-1 rounded border border-gray-300 bg-white text-gray-700 hover:bg-purple-200 hover:text-black hover:border-purple-200 text-xs">Previous</button>
-                <button className="px-2.5 py-1 rounded border border-purple-600 transition-colors bg-purple-600 text-white text-xs">1</button>
-                <button className="px-2.5 py-1 rounded border border-gray-300 transition-colors bg-white text-gray-700 border border-gray-200 hover:bg-purple-200 hover:border-purple-200 hover:text-black text-xs">2</button>
-                <button className="px-2.5 py-1 rounded border border-gray-300 transition-colors bg-white text-gray-700 border border-gray-200 hover:bg-purple-200 hover:border-purple-200 hover:text-black text-xs">3</button>
-                <button className="px-2.5 py-1 rounded border border-gray-300 bg-white text-gray-700 hover:bg-purple-200 hover:text-black hover:border-purple-200 text-xs">Next</button>
-              </div>
-            </nav>
-          </div>
-        </footer>
       </main>
-    </div>
+      <footer className="fixed bottom-0 left-64 right-0 z-30 flex items-center justify-between mt-4 gap-2 p-4 bg-white">
+        <div className="flex h-8 text-xs text-gray-600 items-center">Showing X to Y of {total} products</div>
+        <div>
+          <nav>
+            <div className="flex gap-2 text-xs">
+              <button className="px-2.5 py-1 rounded border border-gray-300 bg-white text-gray-700 hover:bg-purple-200 hover:text-black hover:border-purple-200 text-xs">Previous</button>
+              <button className="px-2.5 py-1 rounded border border-purple-600 transition-colors bg-purple-600 text-white text-xs">1</button>
+              <button className="px-2.5 py-1 rounded border border-gray-300 transition-colors bg-white text-gray-700 border border-gray-200 hover:bg-purple-200 hover:border-purple-200 hover:text-black text-xs">2</button>
+              <button className="px-2.5 py-1 rounded border border-gray-300 transition-colors bg-white text-gray-700 border border-gray-200 hover:bg-purple-200 hover:border-purple-200 hover:text-black text-xs">3</button>
+              <button className="px-2.5 py-1 rounded border border-gray-300 bg-white text-gray-700 hover:bg-purple-200 hover:text-black hover:border-purple-200 text-xs">Next</button>
+            </div>
+          </nav>
+        </div>
+      </footer>
+    </>
   );
 }
