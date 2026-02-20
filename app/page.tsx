@@ -1,5 +1,5 @@
 import type { ProductsResponse } from "./types";
-import { Plus, Package2, CircleCheck, TriangleAlert, CircleX, Funnel, SquarePen, Trash2 } from 'lucide-react';
+import { Plus, Package2, CircleCheck, TriangleAlert, CircleX, Funnel, SquarePen, Trash2, Search } from 'lucide-react';
 
 const API_URL = "http://localhost:4000";
 const defaultLimit = 20;
@@ -22,7 +22,7 @@ export default async function Home() {
       <header className="fixed left-64 top-0 right-0 z-30">
         <section className="px-8 py-4 bg-white flex items-center justify-between">
           <div >
-            <h1 className="text-1xl font-bold">Product management</h1>
+            <h1 className="text-xl font-bold">Product management</h1>
             <span className="text-gray-500 text-sm">Manage your store inventory</span>
           </div>
           <button className="bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-medium hover:bg-purple-700"><Plus/> Add product</button>
@@ -65,31 +65,32 @@ export default async function Home() {
             </div>
           </div>
         </section>
-        <form className="flex items-center gap-4 mb-6 border-gray-300 px-8 py-4 bg-gray-50">
+        <form className="flex items-center text-xs gap-4 mb-6 border-gray-300 px-8 py-4 bg-white">
           <div className="border-gray-300 border-2 rounded-lg px-4 py-2 flex items-center flex-1">
-            <label htmlFor="search-input" >Sök bland produkter</label>
-            <input name="search-input" id="search-input" />
+            <Search className="w-4 h-4 pink-500"/>
+            <label htmlFor="search-input" className="hidden" >Sök bland produkter</label>
+            <input name="search-input" placeholder="Search products..." id="search-input" />
           </div>
           <div className="border-gray-300 border-2 rounded-lg px-4 py-2 flex items-center">
             <label htmlFor="category" className="hidden">Välj kategori</label>
             <select id="category">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="2">3</option>
+              <option value="1">Category 1</option>
+              <option value="2">Category 2</option>
+              <option value="2">Category 3</option>
             </select>
           </div>
           <div className="border-gray-300 border-2 rounded-lg px-4 py-2 flex items-center">
             <label htmlFor="status"className="hidden">Välj lagerstatus</label>
             <select id="category">
-            <option value="1">High</option>
+              <option value="1">High</option>
               <option value="2">Medium</option>
-            <option value="2">Low</option>
+              <option value="3">Low</option>
             </select>
           </div>
           <div className="border-gray-300 border-2 rounded-lg px-4 py-2 flex items-center">
+            <Funnel className="w-4 h-4"/>
             <label htmlFor="filter" className="hidden">Filtrera produkter</label>
             <button type="button" id="filter">Filter</button>
-            <Funnel/>
           </div>
         </form>
       </header>
@@ -119,7 +120,7 @@ export default async function Home() {
                 <td className="px-3 py-2 align-middle text-right nowrap">{formatPrice(product.price)} kr</td>
                 <td className="px-3 py-2 align-middle text-right">{product.stock}pcs</td>
                 <td className={`px-3 py-2 align-middle text-center ${((product.stock ?? 0) > 10) ? 'text-green-700' : (product.stock ?? 0) > 0 ? 'text-yellow-700' : 'text-red-700'}`}>{product.availabilityStatus}</td>
-                <td className="px-3 py-2 align-middle text-center flex gap-1">
+                <td className="px-3 py-2 align-middle text-right flex gap-1">
                   <button className="text-purple-600 bg-purple-200 p-1 rounded-md hover:bg-purple-700 hover:text-white"><SquarePen className="w-4 h-4" /></button>
                   <button className="text-red-600 bg-red-200 p-1 rounded-md hover:bg-red-700 hover:text-white"><Trash2 className="w-4 h-4" /></button>
                 </td>

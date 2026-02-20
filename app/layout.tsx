@@ -44,12 +44,13 @@ export default function RootLayout({
                   {menuItems.map((item) => {
                     /*const isActive = pathname === item.href;*/
                       return(
-                      <li key={item.href}>
-                        <Link
-                          className={`flex gap-2 px-6 py-2 item-center gap-2 rounded-lg font-medium cursor-pointer ${
-                            item.color ? `bg-white text-${item.color}-600` : ''}
+                      <li key={item.href} className={`${
+                            item.color ? `bg-white text-${item.color}-500` : ''}
                             ${ /*isActive ? `bg-${item.color}-600 text-white` : ''*/'' }
-                          }`}
+                          }`}>
+
+                        <Link
+                          className="flex gap-2 px-6 py-2 item-center gap-2 rounded-lg font-medium cursor-pointer"
                           href={item.href}
                           >
                           {item.label}
@@ -68,8 +69,7 @@ export default function RootLayout({
               </div>
             </section>
           </aside>
-
-              {children}
+          {children}
         </div>
       </body>
     </html>
