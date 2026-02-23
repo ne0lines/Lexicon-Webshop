@@ -13,12 +13,18 @@ type Product = ProductsResponse["products"][number];
 export default function ProductsTableRow({
     product,
     onEdit,
+    onDelete,
 }: Readonly<{
     product: Product;
     onEdit: (product: Product) => void;
+    onDelete: (product: Product) => void;
 }>) {
     function handleEditClick() {
         onEdit(product);
+    }
+
+    function handleDeleteClick() {
+        onDelete(product);
     }
 
     let stockStatusClass = "text-red-700";
@@ -70,7 +76,11 @@ export default function ProductsTableRow({
             >
                 <SquarePen className="w-4 h-4" />
             </button>
-            <button type="button" className="text-red-600 bg-red-200 p-1 rounded-md hover:bg-red-700 hover:text-white">
+            <button
+                type="button"
+                onClick={handleDeleteClick}
+                className="text-red-600 bg-red-200 p-1 rounded-md hover:bg-red-700 hover:text-white"
+            >
                 <Trash2 className="w-4 h-4" />
             </button>
             </td>
