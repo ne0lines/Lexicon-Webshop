@@ -1,14 +1,13 @@
 import { Funnel, Plus, Search } from "lucide-react";
 import StatCard from "./HeaderStatCard";
+import { Product } from "../types";
 
 interface Header {
     total: number;
-    inStock: number;
-    lowStock: number;
-    outOfStock: number;
+    products: Product[]
 }
 
-export default function Header({ total, inStock, lowStock, outOfStock }: Header) {
+export default function Header({ total, products }: Header) {
 
     return (
         <>
@@ -22,7 +21,7 @@ export default function Header({ total, inStock, lowStock, outOfStock }: Header)
                     <button className="bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-medium hover:bg-purple-700"><Plus /> Add product</button>
                 </section>
 
-                <StatCard total={total} inStock={inStock} lowStock={lowStock} outOfStock={outOfStock} />
+                <StatCard total={total} products={products} />
 
 
                 <form className="flex items-center text-xs gap-4 mb-6 border-gray-300 px-8 py-4 bg-white">
