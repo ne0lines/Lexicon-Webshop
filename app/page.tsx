@@ -19,13 +19,20 @@ function formatPrice(value: number) {
   return Math.trunc(Number(value)).toLocaleString("sv-SE");
 }
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   // we use the fetch() method to get the products from the API
   // in this fetch we sort using _sort and _order and we limit the number of products using _limit
   // we also use _expand to get the relational category data
   // we can use the other destructed variables like page, total and so on to create pagination or show info
+  const params = await searchParams;
+  const currentPage = Number(params.page) || 1;
+  console.log("currentPage= ", { currentPage });
   const { products, total, page, pages, limit }: ProductsResponse = await fetch(
-    `${API_URL}/products/?_limit=${defaultLimit}&_sort=id&_order=desc&_expand=category`,
+    `${API_URL}/products/?_limit=${defaultLimit}&_sort=id&_order=desc&_expand=category&_page=${currentPage}`,
   ).then((res) => res.json());
 
   // Check if the products is "in stock"
@@ -79,7 +86,7 @@ export default async function Home() {
           </table>
         </div>
       </main>
-      <Footer total={total} />
+      <Footer total={total} pages={pages} />
     </>
   );
 }
