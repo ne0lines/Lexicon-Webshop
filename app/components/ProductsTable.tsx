@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
     buildProductUpdatePayload,
     createProduct,
+    deleteProduct,
     emptyProductFormValues,
     ProductFormValues,
     toProductFormValues,
@@ -60,6 +61,33 @@ export default function ProductsTable({
         setEditingProductId(product.id);
     }
 
+    async function handleDelete(product: ProductsResponse["products"][number]) {
+        const confirmation = globalThis.prompt(
+            `Type DELETE to remove "${product.title}".`,
+        );
+
+        if (confirmation !== "DELETE") {
+            return;
+        }
+
+        setErrorMessage(undefined);
+
+        try {
+            await deleteProduct(product.id);
+            setRows((previousRows) =>
+                previousRows.filter((previousProduct) => previousProduct.id !== product.id),
+            );
+
+            if (editingProductId === product.id) {
+                setEditingProductId(null);
+            }
+        } catch (error) {
+            setErrorMessage(
+                error instanceof Error ? error.message : "Något gick fel vid borttagning.",
+            );
+        }
+    }
+
     function handleCloseModal() {
         if (isSubmitting) {
             return;
@@ -78,7 +106,19 @@ export default function ProductsTable({
             const payload = buildProductUpdatePayload(values);
 
             const createdProduct = await createProduct(payload);
-            setRows((previousRows) => [createdProduct, ...previousRows]);
+            setRows((previousRows) => {
+                const selectedCategory = categories.find(
+                    (category) => category.id === createdProduct.categoryId,
+                );
+
+                return [
+                    {
+                        ...createdProduct,
+                        category: selectedCategory ?? createdProduct.category,
+                    },
+                    ...previousRows,
+                ];
+            });
             setIsCreateOpen(false);
         } catch (error) {
             setErrorMessage(
@@ -100,10 +140,19 @@ export default function ProductsTable({
         try {
             const payload = buildProductUpdatePayload(values);
             const updatedProduct = await updateProduct(editingProduct.id, payload);
+            const selectedCategory = categories.find(
+                (category) => category.id === updatedProduct.categoryId,
+            );
 
             setRows((previousRows) =>
                 previousRows.map((product) =>
-                    product.id === editingProduct.id ? { ...product, ...updatedProduct } : product,
+                    product.id === editingProduct.id
+                        ? {
+                              ...product,
+                              ...updatedProduct,
+                              category: selectedCategory ?? updatedProduct.category,
+                          }
+                        : product,
                 ),
             );
 
@@ -133,7 +182,12 @@ export default function ProductsTable({
         </thead>
         <tbody>
             {rows.map((product) => (
-                <ProductsTableRow key={product.id} product={product} onEdit={handleOpenEdit} />
+                <ProductsTableRow
+                    key={product.id}
+                    product={product}
+                    onEdit={handleOpenEdit}
+                    onDelete={handleDelete}
+                />
             ))}
         </tbody>
         </table>
