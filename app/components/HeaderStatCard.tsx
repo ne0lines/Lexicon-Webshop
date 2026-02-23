@@ -10,17 +10,6 @@ interface StatCardProps {
 // Each card will recieve a differenet prop
 export default function StatCard({ total, inStock, lowStock, outOfStock }: StatCardProps) {
 
-    // Get total numbers from props in statistic bar
-
-    // Total products
-
-    // How many in stock
-
-    // How many have "low stock"
-
-    // How many products are out of stock
-
-
     return (
         <>
 

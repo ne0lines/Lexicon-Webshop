@@ -1,4 +1,4 @@
-import { Funnel, Search } from "lucide-react";
+import { Funnel, Plus, Search } from "lucide-react";
 import StatCard from "./HeaderStatCard";
 
 interface Header {
