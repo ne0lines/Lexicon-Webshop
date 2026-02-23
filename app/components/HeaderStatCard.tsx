@@ -1,14 +1,24 @@
 import { CircleCheck, CircleX, Package2, Plus, TriangleAlert } from "lucide-react";
+import { Product } from "../types";
 
 interface StatCardProps {
     total: number;
-    inStock: number;
-    lowStock: number;
-    outOfStock: number;
+    products: Product[]
 
 }
 // Each card will recieve a differenet prop
-export default function StatCard({ total, inStock, lowStock, outOfStock }: StatCardProps) {
+export default function StatCard({ total, products }: StatCardProps) {
+
+    // Check if the products is "in stock"
+    // If a stock value is 0 or it is undefined, filter it out (all of the below use this)
+    const inStock = products.filter((p) => (p.stock ?? 0) > 0).length;
+
+    // Check if products is in "low stock"
+    const lowStock = products.filter((p) => (p.stock ?? 0) > 0 && (p.stock ?? 0) < 20).length;
+
+    // Check if products is _out of stock_
+    const outOfStock = products.filter((p) => (p.stock ?? 0) === 0).length;
+
 
     return (
         <>

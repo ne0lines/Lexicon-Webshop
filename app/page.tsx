@@ -28,21 +28,12 @@ export default async function Home() {
     `${API_URL}/products/?_limit=${defaultLimit}&_sort=id&_order=desc&_expand=category`,
   ).then((res) => res.json());
 
-  // Check if the products is "in stock"
-  // If a stock value is 0 or it is undefined, filter it out (all of the below use this)
-  const inStock = products.filter((p) => (p.stock ?? 0) > 0).length;
-
-  // Check if products is in "low stock"
-  const lowStock = products.filter((p) => (p.stock ?? 0) > 0 && (p.stock ?? 0) < 20).length;
-
-  // Check if products is _out of stock_
-  const outOfStock = products.filter((p) => (p.stock ?? 0) === 0).length;
 
   return (
     <>
 
       {/* Replace with header component. Total is already created in fetch */}
-      <Header total={total} inStock={inStock} lowStock={lowStock} outOfStock={outOfStock} />
+      <Header products={products} total={total} />
       <main className="w-full pl-70 pt-70 pb-15 bg-gray-50">
         <div className="bg-pink-100 rounded-md p-2 flex items-center justify-center text-pink-500">
           <CircleX />
