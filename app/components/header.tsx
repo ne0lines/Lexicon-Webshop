@@ -1,6 +1,7 @@
 import { Funnel, Plus, Search } from "lucide-react";
 import StatCard from "./HeaderStatCard";
 import { Product } from "../types";
+import AddProductButton from "./ProductAddButton";
 
 interface Header {
     total: number;
@@ -18,7 +19,7 @@ export default function Header({ total, products }: Header) {
                         <h1 className="text-xl font-bold">Product management</h1>
                         <span className="text-gray-500 text-sm">Manage your store inventory</span>
                     </div>
-                    <button className="bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-medium hover:bg-purple-700"><Plus /> Add product</button>
+                    <AddProductButton />
                 </section>
 
                 <StatCard total={total} products={products} />
