@@ -3,7 +3,7 @@ import AddProductButton from "./components/ProductAddButton";
 import Header from "./components/header";
 import Footer from "./components/Footer-component";
 import ProductsTable from "./components/ProductsTable";
-import type { ProductsResponse } from "./types";
+
 import {
   Package2,
   CircleCheck,
