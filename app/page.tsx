@@ -1,3 +1,4 @@
+import Footer from "./components/Footer-component";
 import Header from "./components/header";
 import type { ProductsResponse } from "./types";
 import {
@@ -30,17 +31,23 @@ export default async function Home({
   // we can use the other destructed variables like page, total and so on to create pagination or show info
   const params = await searchParams;
   const currentPage = Number(params.page) || 1;
+
+  const { products: allProducts }: ProductsResponse = await fetch(
+    `${API_URL}/products/?_sort=id&_order=desc&_expand=category`,
+  ).then((res) => res.json());
+
   console.log("currentPage= ", { currentPage });
   const { products, total, page, pages, limit }: ProductsResponse = await fetch(
     `${API_URL}/products/?_limit=${defaultLimit}&_sort=id&_order=desc&_expand=category&_page=${currentPage}`,
   ).then((res) => res.json());
 
 
+
   return (
     <>
 
       {/* Replace with header component. Total is already created in fetch */}
-      <Header products={products} total={total} />
+      <Header products={allProducts}  />
       <main className="w-full pl-70 pt-70 pb-15 bg-gray-50">
         <div className="bg-pink-100 rounded-md p-2 flex items-center justify-center text-pink-500">
           <CircleX />

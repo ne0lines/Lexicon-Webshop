@@ -3,11 +3,10 @@ import StatCard from "./HeaderStatCard";
 import { Product } from "../types";
 
 interface Header {
-    total: number;
     products: Product[]
 }
 
-export default function Header({ total, products }: Header) {
+export default function Header({ products: allProducts }: Header) {
 
     return (
         <>
@@ -21,7 +20,7 @@ export default function Header({ total, products }: Header) {
                     <button className="bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-medium hover:bg-purple-700"><Plus /> Add product</button>
                 </section>
 
-                <StatCard total={total} products={products} />
+                <StatCard products={allProducts} />
 
 
                 <form className="flex items-center text-xs gap-4 mb-6 border-gray-300 px-8 py-4 bg-white">
