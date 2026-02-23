@@ -47,7 +47,13 @@ export default async function Home({
           <ProductsTable products={products} categories={categories} />
         </div>
       </main>
-      <Footer total={total} pages={pages} />
+      <Footer
+        total={total}
+        pages={pages}
+        numberOfProducts={products.length}
+        currentPage={currentPage}
+        limit={defaultLimit}
+      />
     </>
   );
 }

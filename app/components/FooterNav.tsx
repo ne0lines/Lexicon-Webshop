@@ -1,7 +1,8 @@
+"use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function PageNavigation({ pages }: { pages: number }) {
+export default function FooterNav({ pages }: { pages: number }) {
   const router = useRouter();
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
