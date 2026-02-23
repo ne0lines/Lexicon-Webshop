@@ -4,9 +4,10 @@ import { Product } from "../types";
 
 interface Header {
     products: Product[]
+    total: number;
 }
 
-export default function Header({ products: allProducts }: Header) {
+export default function Header({ products: allProducts, total: totalProducts }: Header) {
 
     return (
         <>
@@ -20,7 +21,7 @@ export default function Header({ products: allProducts }: Header) {
                     <button className="bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-medium hover:bg-purple-700"><Plus /> Add product</button>
                 </section>
 
-                <StatCard products={allProducts} />
+                <StatCard products={allProducts} total={totalProducts} />
 
 
                 <form className="flex items-center text-xs gap-4 mb-6 border-gray-300 px-8 py-4 bg-white">
