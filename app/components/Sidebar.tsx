@@ -9,9 +9,7 @@ export default function Sidebar() {
                 <div className="px-6 py-4 text-xl font-bold">
                     <SidebarLogotype />
                 </div>
-                <nav className="mt-4">
-                    <SidebarMenu />
-                </nav>
+                <SidebarMenu />
             </div> 
             <SidebarUserDisplayWidget />
         </aside>
