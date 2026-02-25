@@ -4,11 +4,11 @@ import { Product } from "../types";
 import AddProductButton from "./ProductAddButton";
 
 interface Header {
-    total: number;
     products: Product[]
+    total: number;
 }
 
-export default function Header({ total, products }: Header) {
+export default function Header({ products: allProducts, total: totalProducts }: Header) {
 
     return (
         <>
@@ -22,7 +22,7 @@ export default function Header({ total, products }: Header) {
                     <AddProductButton />
                 </section>
 
-                <StatCard total={total} products={products} />
+                <StatCard products={allProducts} total={totalProducts} />
 
 
                 <form className="flex items-center text-xs gap-4 mb-6 border-gray-300 px-8 py-4 bg-white">

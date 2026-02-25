@@ -28,6 +28,12 @@ export default async function Home({
   // we can use the other destructed variables like page, total and so on to create pagination or show info
   const params = await searchParams;
   const currentPage = Number(params.page) || 1;
+
+  // New fetch to get whole stock inventory instead of rerendering on pagination
+  const { products: allProducts, total: totalProducts }: ProductsResponse = await fetch(
+    `${API_URL}/products/?_sort=id&_order=desc&_expand=category`,
+  ).then((res) => res.json());
+
   console.log("currentPage= ", { currentPage });
   const { products, total, page, pages, limit }: ProductsResponse = await fetch(
     `${API_URL}/products/?_limit=${defaultLimit}&_sort=id&_order=desc&_expand=category&_page=${currentPage}`,
@@ -41,7 +47,7 @@ export default async function Home({
     <>
 
       {/* Replace with header component. Total is already created in fetch */}
-      <Header products={products} total={total} />
+      <Header products={allProducts} total={totalProducts} />
       <main className="w-full pl-70 pt-70 pb-15 bg-gray-50">
         <div>
           <ProductsTable products={products} categories={categories} />
