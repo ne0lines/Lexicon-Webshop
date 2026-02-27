@@ -78,21 +78,19 @@ export default function ProductsTable({
 
   async function handleDelete(product: ProductsResponse['products'][number]) {
     const confirmation = globalThis.prompt(
-      `Type DELETE to remove "${product.title}".`,
+      `Type DELETE to remove "${product.title}".`
     );
 
     if (confirmation !== 'DELETE') {
       return;
     }
 
-    setErrorMessage(undefined);
-
     try {
       await deleteProduct(product.id);
       setRows((previousRows) =>
         previousRows.filter(
-          (previousProduct) => previousProduct.id !== product.id,
-        ),
+          (previousProduct) => previousProduct.id !== product.id
+        )
       );
 
       if (editingProductId === product.id) {
@@ -102,7 +100,7 @@ export default function ProductsTable({
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : 'Något gick fel vid borttagning.',
+          : 'Något gick fel vid borttagning.'
       );
     }
   }
