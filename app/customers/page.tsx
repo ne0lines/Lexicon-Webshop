@@ -93,21 +93,21 @@ export default async function CustomersPage() {
                 <tr key={customer.reviewerEmail} className="border-t border-gray-100">
                     <td className="px-3 py-2 align-middle font-semibold text-blue-500 whitespace-nowrap truncate">{customer.reviewerName}</td>
                     <td className="px-3 py-2 align-middle">{customer.reviewerEmail}</td>
-                <td className="px-3 py-2 align-middle text-center">{customer.productsBought}</td>
-                <td className="px-3 py-2 align-middle text-right">{formatPrice(customer.totalSpent)} kr</td>
+                    <td className="px-3 py-2 align-middle text-center">{customer.productsBought}</td>
+                    <td className="px-3 py-2 align-middle text-right">{formatPrice(customer.totalSpent)} kr</td>
                     <td className="px-3 py-2 align-middle overflow-hidden text-right flex gap-1 justify-end">
-                    <button
-                    type="button"
-                    className="text-purple-600 bg-purple-200 p-1 rounded-md hover:bg-purple-700 hover:text-white"
-                    >
-                        <SquarePen className="w-4 h-4" />
-                    </button>
-                    <button
-                    type="button"
-                    className="text-red-600 bg-red-200 p-1 rounded-md hover:bg-red-700 hover:text-white"
-                    >
-                        <Trash2 className="w-4 h-4" />
-                    </button>
+                        <button
+                        type="button"
+                        className="text-purple-600 bg-purple-200 p-1 rounded-md hover:bg-purple-700 hover:text-white"
+                        >
+                            <SquarePen className="w-4 h-4" />
+                        </button>
+                        <button
+                        type="button"
+                        className="text-red-600 bg-red-200 p-1 rounded-md hover:bg-red-700 hover:text-white"
+                        >
+                            <Trash2 className="w-4 h-4" />
+                        </button>
                     </td>
                 </tr>
                 ))}
