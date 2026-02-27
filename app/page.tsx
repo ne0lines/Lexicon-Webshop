@@ -29,7 +29,7 @@ export default async function Home({
   
   return (
     <>
-      <Header products={allProducts} total={totalProducts} />
+      <Header products={allProducts} total={totalProducts} categories={categories} />
       <main className="w-full pl-70 pt-70 pb-15 bg-gray-50">
         <div>
           <ProductsTable products={products} categories={categories} />
