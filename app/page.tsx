@@ -1,17 +1,7 @@
 import type { Category, ProductsResponse } from './types';
-import AddProductButton from './components/ProductAddButton';
 import Header from './components/header';
 import Footer from './components/Footer-component';
 import ProductsTable from './components/ProductsTable';
-
-import {
-  Package2,
-  CircleCheck,
-  TriangleAlert,
-  CircleX,
-  Funnel,
-  Search,
-} from 'lucide-react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 const defaultLimit = 20;
