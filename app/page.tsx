@@ -13,13 +13,14 @@ export default async function Home({
 }>) {
   const params = await searchParams;
   const currentPage = Math.max(1, Number(params.page) || 1);
+  const search = params.search || '';
 
   const [allProductsResponse, pagedProductsResponse, categories] = await Promise.all([
     fetch(`${API_URL}/products/?_sort=id&_order=desc&_expand=category`).then((res) =>
       res.json(),
     ) as Promise<ProductsResponse>,
     fetch(
-      `${API_URL}/products/?_limit=${DEFAULT_LIMIT}&_sort=id&_order=desc&_expand=category&_page=${currentPage}`,
+      `${API_URL}/products/?_limit=${DEFAULT_LIMIT}&_sort=id&_order=desc&_expand=category&_page=${currentPage}&title_like=${search}`,
     ).then((res) => res.json()) as Promise<ProductsResponse>,
     fetch(`${API_URL}/categories`).then((res) => res.json()) as Promise<Category[]>,
   ]);
