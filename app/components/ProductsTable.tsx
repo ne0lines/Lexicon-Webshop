@@ -45,6 +45,13 @@ export default function ProductsTable({
     }
 
     useEffect(() => {
+        setRows(products);
+        setEditingProductId(null);
+        setIsCreateOpen(false);
+        setErrorMessage(undefined);
+    }, [products]);
+
+    useEffect(() => {
         function onOpenCreateFromHeader() {
             handleOpenCreate();
         }

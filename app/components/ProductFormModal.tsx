@@ -132,7 +132,7 @@ export default function ProductFormModal({
             </label>
           </div>
 
-          <label className="flex flex-col gap-1 text-sm">
+          <label className="flex flex-col gap-1 text-sm pt-4">
             <span>Bild (thumbnail URL)</span>
             <input
               required
@@ -143,7 +143,7 @@ export default function ProductFormModal({
             />
           </label>
 
-          <label className="flex flex-col gap-1 text-sm">
+          <label className="flex flex-col gap-1 text-sm pt-4">
             <span>Beskrivning</span>
             <textarea
               required

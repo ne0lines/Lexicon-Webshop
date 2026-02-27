@@ -1,14 +1,22 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function FooterNav({ pages }: { pages: number }) {
+export default function FooterNav({
+  pages,
+  currentPage,
+}: {
+  pages: number;
+  currentPage: number;
+}) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-    router.push(`?page=${pageNumber}`);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", pageNumber.toString());
+    router.push(`${pathname}?${params.toString()}`);
   };
-  const [currentPage, setCurrentPage] = useState(1);
 
   const selectedStyle =
     "px-2.5 py-1 rounded border border-purple-600 transition-colors bg-purple-600 text-white text-xs";

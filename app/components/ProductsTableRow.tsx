@@ -36,11 +36,11 @@ export default function ProductsTableRow({
 
     return(
         <tr className="hover:bg-gray-100">
-            <td className="px-3 py-2 w-auto align-middle">
+            <td className="px-3 py-2 w-auto h-10 align-middle aspect-square">
             <img
                 src={product.thumbnail}
                 alt={product.title}
-                className="w-10"
+                className="h-10 w-10 object-cover"
             />
             </td>
             <td className="px-3 py-2 w-70 align-middle">
@@ -68,7 +68,7 @@ export default function ProductsTableRow({
             >
                 {product.availabilityStatus}
             </td>
-            <td className="px-3 py-2 align-middle text-right flex gap-1">
+            <td className="px-3 py-2 align-middle overflow-hidden text-right flex gap-1">
             <button
                 type="button"
                 onClick={handleEditClick}

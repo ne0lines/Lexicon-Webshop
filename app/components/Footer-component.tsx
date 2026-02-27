@@ -23,7 +23,7 @@ export default function Footer({
         limit={limit}
       />
       <div>
-        <FooterNav pages={pages} />
+        <FooterNav pages={pages} currentPage={currentPage} />
       </div>
     </footer>
   );

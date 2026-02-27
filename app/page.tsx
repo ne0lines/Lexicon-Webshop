@@ -1,52 +1,34 @@
 import type { Category, ProductsResponse } from "./types";
-import AddProductButton from "./components/ProductAddButton";
 import Header from "./components/header";
 import Footer from "./components/Footer-component";
 import ProductsTable from "./components/ProductsTable";
 
-import {
-  Package2,
-  CircleCheck,
-  TriangleAlert,
-  CircleX,
-  Funnel,
-  Search,
-} from "lucide-react";
-
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-const defaultLimit = 20;
-
+const DEFAULT_LIMIT = 20;
 
 export default async function Home({
   searchParams,
-}: {
+}: Readonly<{
   searchParams: Promise<{ page?: string }>;
-}) {
-  // we use the fetch() method to get the products from the API
-  // in this fetch we sort using _sort and _order and we limit the number of products using _limit
-  // we also use _expand to get the relational category data
-  // we can use the other destructed variables like page, total and so on to create pagination or show info
+}>) {
   const params = await searchParams;
-  const currentPage = Number(params.page) || 1;
+  const currentPage = Math.max(1, Number(params.page) || 1);
 
-  // New fetch to get whole stock inventory instead of rerendering on pagination
-  const { products: allProducts, total: totalProducts }: ProductsResponse = await fetch(
-    `${API_URL}/products/?_sort=id&_order=desc&_expand=category`,
-  ).then((res) => res.json());
+  const [allProductsResponse, pagedProductsResponse, categories] = await Promise.all([
+    fetch(`${API_URL}/products/?_sort=id&_order=desc&_expand=category`).then((res) =>
+      res.json(),
+    ) as Promise<ProductsResponse>,
+    fetch(
+      `${API_URL}/products/?_limit=${DEFAULT_LIMIT}&_sort=id&_order=desc&_expand=category&_page=${currentPage}`,
+    ).then((res) => res.json()) as Promise<ProductsResponse>,
+    fetch(`${API_URL}/categories`).then((res) => res.json()) as Promise<Category[]>,
+  ]);
 
-  console.log("currentPage= ", { currentPage });
-  const { products, total, page, pages, limit }: ProductsResponse = await fetch(
-    `${API_URL}/products/?_limit=${defaultLimit}&_sort=id&_order=desc&_expand=category&_page=${currentPage}`,
-  ).then((res) => res.json());
-
-
-
-  const categories: Category[] = await fetch(`${API_URL}/categories`).then((res) => res.json());
+  const { products: allProducts, total: totalProducts } = allProductsResponse;
+  const { products, total, pages } = pagedProductsResponse;
   
   return (
     <>
-
-      {/* Replace with header component. Total is already created in fetch */}
       <Header products={allProducts} total={totalProducts} />
       <main className="w-full pl-70 pt-70 pb-15 bg-gray-50">
         <div>
@@ -58,7 +40,7 @@ export default async function Home({
         pages={pages}
         numberOfProducts={products.length}
         currentPage={currentPage}
-        limit={defaultLimit}
+        limit={DEFAULT_LIMIT}
       />
     </>
   );
